@@ -56,6 +56,11 @@ option(ENABLE_JKFACTORY      "Enable the distributed JKFactory (requires MPI)"  
 
 set(EXTERNAL_LIBS)
 
+# Python Detection
+include(ConfigPython)
+link_libraries("${PYTHON_LIBRARY}")
+include_directories(SYSTEM "${PYTHON_INCLUDE_DIR}")
+
 # Decide if Fortran is needed
 if(ENABLE_LIBERD OR ENABLE_PCMSOLVER OR ENABLE_JKFACTORY OR ENABLE_DKH)
    enable_language(Fortran)
@@ -143,10 +148,7 @@ endif()
 find_package(Threads REQUIRED)
 link_libraries("${CMAKE_THREAD_LIBS_INIT}")
 
-# Python Detection
-include(ConfigPython)
-link_libraries("${PYTHON_LIBRARY}")
-include_directories(SYSTEM "${PYTHON_INCLUDE_DIR}")
+
 
 # Boost Detection
 # We need Boost.Python, so this has to come _after_ Python detection
